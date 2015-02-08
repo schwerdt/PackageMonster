@@ -1,0 +1,6 @@
+*.pyc
+accumulator_config.py
+bin
+include
+lib
+local
