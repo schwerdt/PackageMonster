@@ -6,6 +6,13 @@ source bin/activate
 pip install -r requirements.txt
 deactivate
 
+accumulator_config.py.default is a template for the configuration file.
+Copy it to accumulator_config.py 
+(cp accumulator_config.py.default accumulator_config.py)
+before starting the accumulator. Edit accumulator_config.py 
+to reflect your url to the accumulator and your desired number 
+of POST attempts.
+
 To start the accumulator, type:
 bin/python accumulator.py
 
