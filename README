@@ -1,0 +1,15 @@
+Install a virtual environment using
+virtualenv . 
+
+Then install the requirements that are listed in requirements.txt using 
+source bin/activate
+pip install -r requirements.txt
+deactivate
+
+To start the accumulator, type:
+bin/python accumulator.py
+
+The accumulator has two GET routines and a POST 
+routine.  The send_label_to_accumulator function
+in conveyor_belt.py takes a package label, turns it
+into a json format and sends the label to the accumulator.
