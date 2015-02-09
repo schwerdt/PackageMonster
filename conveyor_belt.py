@@ -2,6 +2,8 @@ import requests
 import json
 import accumulator_config
 import sys
+import random
+import time
 
 def send_label_to_accumulator(label):
 
@@ -18,7 +20,22 @@ def send_label_to_accumulator(label):
 
     return None
 
-    
 
+def conveyor_belt():
+    package_labels = ["Rory", "Lorelai", "Emily", "Richard", "Luke", "Sookie", "Jackson", "Kirk", "Paris", "Miss Patty"]
+    num_scanned_packages = 0
+    max_packages = 500
+  
+    while num_scanned_packages < max_packages:
+        label = random.choice(package_labels)
+        response = send_label_to_accumulator(label)
+        if response == None:
+           print 'This label was not successfully communicated to the accumulator: ', label
+        time.sleep(5)
+
+        
+
+
+#Make it possible to run from the command line
 if __name__ == '__main__':
    send_label_to_accumulator(sys.argv[1])
