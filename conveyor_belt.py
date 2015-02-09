@@ -24,7 +24,7 @@ def send_label_to_accumulator(label):
 def conveyor_belt():
     package_labels = ["Rory", "Lorelai", "Emily", "Richard", "Luke", "Sookie", "Jackson", "Kirk", "Paris", "Miss Patty"]
     num_scanned_packages = 0
-    max_packages = 500
+    max_packages = 50
   
     while num_scanned_packages < max_packages:
         label = random.choice(package_labels)

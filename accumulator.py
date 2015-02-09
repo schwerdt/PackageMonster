@@ -14,14 +14,20 @@ def add_package():
     return jsonify({'packages': category_dict}), 201
 
 
+
 @app.route('/accumulator/get_package_labels', methods=['GET'])
 def show_labels():
     return jsonify({'package labels': category_dict.keys()})
 
+
+
 @app.route('/accumulator/get_packages/<string:label_name>', methods=['GET'])
 def show_package_num(label_name):
-    if label_name == None:
-        abort(400)
+
+    if label_name not in category_dict.keys():
+        temp_dict = {label_name: 0} 
+        return jsonify({label_name: temp_dict[label_name]})
+
     return jsonify({label_name: category_dict[label_name]})
 
 
