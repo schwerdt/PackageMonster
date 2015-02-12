@@ -1,5 +1,6 @@
 from flask import Flask, request, abort, jsonify
 from collections import defaultdict
+from accumulator_security import requires_auth
 
 app = Flask(__name__)  #Constructor for Flask object
 
@@ -9,9 +10,13 @@ category_dict = defaultdict(int)  #Create a dictionary where the value is initia
 def add_package():
     if not request.json:
         abort(400)
-    package_name = request.json['label']
-    category_dict[package_name] += 1
-    return jsonify({'packages': category_dict}), 201
+
+    if requires_auth(request.authorization):
+        package_name = request.json['label']
+        category_dict[package_name] += 1
+        return jsonify({'packages': category_dict}), 201
+    else:
+        return jsonify({'packages': category_dict}), 400
 
 
 

@@ -4,6 +4,7 @@ import accumulator_config
 import sys
 import random
 import time
+import csv
 
 def send_label_to_accumulator(label):
 
@@ -11,12 +12,23 @@ def send_label_to_accumulator(label):
     data = {'label': label}
     headers = {'content-type': 'application/json'}
 
+    #Let's try to send in a password as a parameter
+    #Reading the password from a file
+    with open('conveyor_password') as f:
+        authentication = [row for row in csv.DictReader(f,delimiter=',')]
+    #This is a dictionary with keys Username and Password
+    #Create a tuple with the authentication info
+    auth = (authentication[0]['Username'], authentication[0]['Password']) 
+
+
     attempts = 0
 
     while attempts < accumulator_config.max_attempts:
-        response = requests.post(url, data=json.dumps(data), headers=headers)
+        response = requests.post(url, data=json.dumps(data), headers=headers, auth=auth)
         if response.status_code == 201:
             return response.json()
+        if response.status_code == 400:
+            return 'Authentication failed.'
 
     return None
 
