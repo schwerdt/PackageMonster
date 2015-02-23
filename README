@@ -20,3 +20,50 @@ The accumulator has two GET routines and a POST
 routine.  The send_label_to_accumulator function
 in conveyor_belt.py takes a package label, turns it
 into a json format and sends the label to the accumulator.
+
+Before you can add package labels via the accumulator's POST
+method, you will need to create a username and password. This can
+easily be done in an interactive session by using the create_user 
+function in conveyor_belt.py. create_user uses another one of 
+the accumulator's POST functions to add a new user to the 
+database of AuthorizedUsers.
+
+from conveyor_belt import create_user
+create_user('conveyor_belt', 'test_password')
+
+You use send_label_to_accumulator to pass data to the accumulator. 
+You use the two GET methods to get data back out of the accumulator. 
+
+You can get all package labels:
+http://localhost:5000/accumulator/get_package_labels
+
+Or you can get a specific label (packages for Christine in this example):
+http://localhost:5000/accumulator/get_packages/Christine
+
+
+---------------------------------------------------
+The conveyor_belt.py file:
+
+This file contains functions for interacting with the accumulator. 
+Its functions are:
+send_package_to_accumulator
+conveyor_belt
+create_user
+
+The conveyor belt is simply a function that generates package labels
+and sends them to the accumulator using the send_package_to_accumulator
+function.  The send_package_to_accumulator function sends the label info to the
+accumulator and needs authentication information to be passed with the package 
+label information.  Currently this information is read from a file 
+(conveyor_password).  In the repository a file called conveyor_password.default 
+is included so you can see the format in which to add your username 
+and password to the file. Copy this file to conveyor_password and 
+change the contents to include the username and password you 
+created using the create_user function. 
+
+cp conveyor_password.default conveyor_password
+
+
+
+
+

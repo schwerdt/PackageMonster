@@ -20,9 +20,7 @@ def send_label_to_accumulator(label):
     #Create a tuple with the authentication info
     auth = (authentication[0]['Username'], authentication[0]['Password']) 
 
-
     attempts = 0
-
     while attempts < accumulator_config.max_attempts:
         response = requests.post(url, data=json.dumps(data), headers=headers, auth=auth)
         if response.status_code == 201:
@@ -46,6 +44,15 @@ def conveyor_belt():
         time.sleep(5)
 
         
+
+def create_user(username, password):
+    url = accumulator_config.add_user
+    headers = {'content-type': 'application/json'}   
+
+    data = {'username': username, 'password': password}
+
+    response = requests.post(url, data = json.dumps(data), headers = headers)
+
 
 
 #Make it possible to run from the command line

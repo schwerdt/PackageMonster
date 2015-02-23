@@ -1,2 +1,8 @@
+#url to which package labels should be sent
 url='http://localhost:5000/accumulator/submit_package'
+ 
+#url to which requests to add users should be sent
+add_user = 'http://localhost:5000/accumulator/add_user'
+
+#number of attempts to send a package label to accumulator
 max_attempts = 3
