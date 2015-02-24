@@ -107,7 +107,7 @@ def show_labels():
     all_labels = PackageLabels.query.with_entities(PackageLabels.label)
     label_list = [package.label for package in all_labels]
     print label_list
-    return jsonify({'package labels': label_list})
+    return jsonify({'package labels': label_list}), 200
 
 
 
@@ -117,9 +117,9 @@ def show_package_num(label_name):
     #Query the database for label_name
     label_info = PackageLabels.query.filter_by(label=label_name).first()
     if label_info == None:
-       return jsonify({label_name: 0})
+       return jsonify({label_name: 0}), 200
     else:
-        return jsonify({label_name: label_info.package_count })
+        return jsonify({label_name: label_info.package_count }), 200
 
 
 
