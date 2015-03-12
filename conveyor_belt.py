@@ -27,7 +27,9 @@ def send_label_to_accumulator(label):
             if response.status_code == 201:
                 return response.json()
             if response.status_code == 400:
-                return 'Authentication failed.'
+                with open('error_log_file','a') as f:
+                    f.write(label + ', Authentication failed')
+                return False
     #Problem processing request (including failure to connect with Accumulator)
     except requests.exceptions.RequestException as error:
         #Append the label that was not received by the accumulator to a file.
