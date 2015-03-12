@@ -20,13 +20,20 @@ def send_label_to_accumulator(label):
     #Create a tuple with the authentication info
     auth = (authentication[0]['Username'], authentication[0]['Password']) 
 
-    attempts = 0
-    while attempts < accumulator_config.max_attempts:
-        response = requests.post(url, data=json.dumps(data), headers=headers, auth=auth)
-        if response.status_code == 201:
-            return response.json()
-        if response.status_code == 400:
-            return 'Authentication failed.'
+    try:
+        attempts = 0
+        while attempts < accumulator_config.max_attempts:
+            response = requests.post(url, data=json.dumps(data), headers=headers, auth=auth)
+            if response.status_code == 201:
+                return response.json()
+            if response.status_code == 400:
+                return 'Authentication failed.'
+    #Problem processing request (including failure to connect with Accumulator)
+    except requests.exceptions.RequestException as error:
+        #Append the label that was not received by the accumulator to a file.
+        with open('error_log_file','a') as f:
+            f.write(label + ', ' + str(type(error)) + '\n')
+        return False
 
     return None
 
@@ -39,9 +46,10 @@ def conveyor_belt():
     while num_scanned_packages < max_packages:
         label = random.choice(package_labels)
         response = send_label_to_accumulator(label)
+        num_scanned_packages += 1
         if response == None:
            print 'This label was not successfully communicated to the accumulator: ', label
-        time.sleep(5)
+       # time.sleep(5)
 
         
 
